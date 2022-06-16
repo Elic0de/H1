@@ -1,0 +1,6 @@
+name: H1
+version: '${project.version}'
+main: com.github.elic0de.h1.H1
+api-version: 1.19
+authors: [ Elic0de ]
+description: 整地用のプラグイン
