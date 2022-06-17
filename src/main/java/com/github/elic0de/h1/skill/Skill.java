@@ -1,13 +1,9 @@
 package com.github.elic0de.h1.skill;
 
 import com.github.elic0de.h1.H1Plugin;
-import com.github.elic0de.h1.player.H1Player;
 import github.scarsz.configuralize.DynamicConfig;
 import lombok.Getter;
-import org.bukkit.Material;
-
-import java.util.EnumSet;
-import java.util.Set;
+import org.bukkit.event.block.BlockBreakEvent;
 
 @Getter
 public class Skill<T> {
@@ -18,13 +14,6 @@ public class Skill<T> {
     private String skillName;
     private String skillDec;
     private String configName;
-
-    private static final Set<Material> IGNORED_BLOCKS = EnumSet.of(
-            Material.BEDROCK,
-            Material.LAVA,
-            Material.WATER,
-            Material.AIR
-    );
 
     public Skill() {
         final Class<?> skillClass = this.getClass();
@@ -41,6 +30,9 @@ public class Skill<T> {
         }
 
         reload();
+    }
+
+    public void execute(BlockBreakEvent event) {
     }
 
     public void reload() {

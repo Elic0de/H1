@@ -1,15 +1,16 @@
 package com.github.elic0de.h1.utils.enums;
 
+import com.github.elic0de.h1.skill.Skill;
+import com.github.elic0de.h1.skill.skills.Ehoumaki;
+import com.github.elic0de.h1.skill.skills.Gunkan;
+
 public enum SkillType {
-    GUNKAN(1, 0, 0);
+    EHOUMAKI(new Ehoumaki()),
+    GUNKAN(new Gunkan());
 
-    public final int up;
-    public final int down;
-    public final int across;
+    public final Skill skill;
 
-    SkillType(int up, int down, int across) {
-        this.up = up;
-        this.down = down;
-        this.across = across;
+    SkillType(Skill skill) {
+        this.skill = skill;
     }
 }

@@ -1,5 +1,6 @@
 package com.github.elic0de.h1.events;
 
+import com.github.elic0de.h1.H1Plugin;
 import com.github.elic0de.h1.player.H1Player;
 import com.github.elic0de.h1.support.TheNewEconomy;
 import org.bukkit.event.EventHandler;
@@ -13,16 +14,20 @@ public class BreakEvent implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent event) {
-        H1Player h1player = getH1Player(event.getPlayer());
+        H1Player h1player = H1Plugin.INSTANCE.getPlayerDataManager().getPlayer(event.getPlayer());
 
         h1player.giveBreakBlocks(1);
 
         // 1000ブロック掘ればプレイヤーに500円付与する
         if (h1player.getBreakBlocks() % 1000 == 0)
-            TheNewEconomy.getEconomy(event.getPlayer()).addHoldings(BigDecimal.valueOf(500));
+            if (TheNewEconomy.isEnableTheNewEconomy)
+                TheNewEconomy.getEconomy(event.getPlayer()).addHoldings(BigDecimal.valueOf(500));
 
         // 5000ブロックで1レベル上げる
         if (h1player.getBreakBlocks() % 5000 == 0)
             h1player.levelUP();
+
+        // スキルの処理
+        h1player.getSkill().execute(event);
     }
 }
