@@ -15,7 +15,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-@SkillData(name = "海鮮丼", desc = " 2×1の縦方向を同時に掘れる", mana = 5, point = 5)
+@SkillData(name = "海鮮丼", desc = "2×1の縦方向を同時に掘れる", mana = 5, point = 5)
 public class Ehoumaki extends Skill {
 
     private static final Set<Material> IGNORED_BLOCKS = EnumSet.of(
@@ -30,12 +30,12 @@ public class Ehoumaki extends Skill {
         Player player = event.getPlayer();
         H1Player h1Player = H1Plugin.INSTANCE.getPlayerDataManager().getPlayer(player);
 
-        if (h1Player.hasMana(mana)) return;
+        if (!h1Player.hasMana(mana)) return;
 
         if (player.getGameMode() == GameMode.CREATIVE) return;
         int blocksUp = 2;
-        int blocksOut = 1;
-        int blocksAcross = 0;
+        int blocksOut = 2;
+        int blocksAcross = 2;
 
         List<Block> area = Utils.getBlocks(event, blocksUp, blocksOut, blocksAcross);
         if (area.size() <= 1) {
@@ -48,5 +48,6 @@ public class Ehoumaki extends Skill {
             }
         }
         h1Player.useMana(mana);
+        sendBossBar(player, h1Player.getSkill());
     }
 }

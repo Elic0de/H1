@@ -66,6 +66,10 @@
             <id>scarsz</id>
             <url>https://nexus.scarsz.me/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -85,6 +89,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Archy-X</groupId>
+            <artifactId>Slate</artifactId>
+            <version>f4ca494a55</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

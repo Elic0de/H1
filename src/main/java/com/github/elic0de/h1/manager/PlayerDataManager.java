@@ -14,6 +14,8 @@ public class PlayerDataManager {
     @Nullable
     public H1Player getPlayer(final Player player) {
         final String playerID = PlayerConverter.getID(player);
+        if (!playerDataMap.containsKey(playerID)) playerDataMap.put(playerID, new H1Player(player));
+
         return playerDataMap.get(playerID);
     }
 

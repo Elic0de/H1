@@ -15,7 +15,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-@SkillData(name = "海鮮丼", desc = " 2×1の縦方向を同時に掘れる", mana = 5, point = 5)
+@SkillData(name = "軍艦", desc = "10×10の範囲の溶岩をマグマブロックに変更して、マグマブロックの部分を一括破壊出来る", mana = 100, point = 150)
 public class Gunkan extends Skill {
 
     private static final Set<Material> IGNORED_BLOCKS = EnumSet.of(

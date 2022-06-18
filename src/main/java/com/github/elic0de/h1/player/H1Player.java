@@ -2,6 +2,7 @@ package com.github.elic0de.h1.player;
 
 import com.github.elic0de.h1.H1Plugin;
 import com.github.elic0de.h1.skill.Skill;
+import com.github.elic0de.h1.skill.skills.Ehoumaki;
 import com.github.elic0de.h1.utils.enums.SkillType;
 import org.bukkit.entity.Player;
 
@@ -19,9 +20,11 @@ public class H1Player {
 
     public H1Player(Player player) {
         this.level = 0;
+        this.mana = 200;
         this.maxMana = 200;
         this.breakBlocks = 0;
         this.point = 0;
+        this.skill = new Ehoumaki();
 
         H1Plugin.INSTANCE.getPlayerDataManager().addPlayer(player, this);
     }
@@ -42,7 +45,7 @@ public class H1Player {
     }
 
     public boolean hasMana(int costMana) {
-        return mana >= costMana;
+        return this.mana >= costMana;
     }
 
     public void resetMana() {
@@ -50,6 +53,7 @@ public class H1Player {
     }
 
     public void useMana(int costMana) {
+        System.out.println(costMana + ":" + mana);
         this.mana = Math.max(0, this.mana - costMana);
     }
 

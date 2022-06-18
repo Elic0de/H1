@@ -1,0 +1,23 @@
+title: '{skills_menu_title}'
+size: 4
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  close:
+    pos: 3,4
+    material: barrier
+    display_name: '{close}'
+templates:
+  skill:
+    ehoumaki:
+      pos: 1,2
+      material: anvil
+    display_name: '&b{skill} &3{mana}'
+    lore:
+      - '&7{skill_desc}'
+      - ' '
+      - '&3Mana: &3{mana}'
+      - '&3Point: {point}'
+      - ' '
+      - '&6{skill_click}'

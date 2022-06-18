@@ -5,3 +5,11 @@
 # or with full source code available to buyers at no additional cost.
 
 config-version: 3
+
+海鮮丼:
+  mana: 5
+  point: 1
+
+恵方巻:
+  mana: 5
+  point: 1

@@ -28,6 +28,7 @@ public class BreakEvent implements Listener {
             h1player.levelUP();
 
         // スキルの処理
-        h1player.getSkill().execute(event);
+        if (h1player.hasSkill())
+            h1player.getSkill().execute(event);
     }
 }

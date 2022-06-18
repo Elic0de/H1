@@ -13,4 +13,16 @@ public enum SkillType {
     SkillType(Skill skill) {
         this.skill = skill;
     }
+
+    public static String getName(String skillName) {
+        switch (skillName) {
+            case "海鮮丼":
+                skillName = EHOUMAKI.name();
+                break;
+            case "軍艦":
+                skillName = GUNKAN.name();
+                break;
+        }
+        return skillName;
+    }
 }

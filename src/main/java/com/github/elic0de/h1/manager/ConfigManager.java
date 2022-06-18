@@ -10,10 +10,6 @@ import lombok.Getter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 public class ConfigManager {
     @Getter
@@ -21,9 +17,9 @@ public class ConfigManager {
     @Getter
     private final File configFile = new File(H1Plugin.INSTANCE.getPlugin().getDataFolder(), "config.yml");
     @Getter
-    private int maxPingTransaction = 120; // This is just a really hot variable so cache it.
-
-    private final List<Pattern> ignoredClientPatterns = new ArrayList<>();
+    private final File menuFile = new File(H1Plugin.INSTANCE.getPlugin().getDataFolder(), "skills.yml");
+    @Getter
+    private final File messagesFile = new File(H1Plugin.INSTANCE.getPlugin().getDataFolder(), "messages.yml");
 
     public ConfigManager() {
         upgrade();
@@ -32,6 +28,8 @@ public class ConfigManager {
         H1Plugin.INSTANCE.getPlugin().getDataFolder().mkdirs();
         config = new DynamicConfig();
         config.addSource(H1.class, "config", getConfigFile());
+        config.addSource(H1.class, "menus", getMenuFile());
+        config.addSource(H1.class, "messages", getMessagesFile());
 
         reload();
     }
@@ -63,22 +61,6 @@ public class ConfigManager {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load config", e);
         }
-        maxPingTransaction = config.getIntElse("max-ping.transaction", 120);
-        ignoredClientPatterns.clear();
-        for (String string : config.getStringList("client-brand.ignored-clients")) {
-            try {
-                ignoredClientPatterns.add(Pattern.compile(string));
-            } catch (PatternSyntaxException e) {
-                throw new RuntimeException("Failed to compile client pattern", e);
-            }
-        }
-    }
-
-    public boolean isIgnoredClient(String brand) {
-        for (Pattern pattern : ignoredClientPatterns) {
-            if (pattern.matcher(brand).find()) return true;
-        }
-        return false;
     }
 
     private void upgrade() {
@@ -107,9 +89,20 @@ public class ConfigManager {
         }
     }
 
-
     private void removeLegacyTwoPointOne(File config) throws IOException {
         // If config doesn't have config-version, it's a legacy config
         Files.move(config.toPath(), new File(H1Plugin.INSTANCE.getPlugin().getDataFolder(), "config-2.1.old.yml").toPath());
+    }
+
+    public void loadMenus() {
+        int menusLoaded = 0;
+        try {
+            H1Plugin.INSTANCE.getSlate().getMenuManager().loadMenu(getMenuFile());
+            menusLoaded++;
+        } catch (Exception e) {
+            LogUtil.warn("Error loading menu " + "skills");
+            e.printStackTrace();
+        }
+        LogUtil.info("Loaded " + menusLoaded + " menus");
     }
 }

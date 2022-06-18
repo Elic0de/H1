@@ -10,16 +10,18 @@ import org.bukkit.plugin.Plugin;
 
 public class TheNewEconomy {
 
-    private static TNEAPI economy = TNE.instance().api();
+    private static TNEAPI economy;
 
     public static boolean isEnableTheNewEconomy = false;
 
     public void start() {
         LogUtil.info("Checking TheNewEconomy Compatibility...");
-
         try {
             Plugin viaBackwards = Bukkit.getPluginManager().getPlugin("TheNewEconomy");
-            if (viaBackwards != null) isEnableTheNewEconomy = true;
+            if (viaBackwards != null) {
+                isEnableTheNewEconomy = true;
+                economy = TNE.instance().api();
+            }
         } catch (Exception ignored) {}
     }
 
