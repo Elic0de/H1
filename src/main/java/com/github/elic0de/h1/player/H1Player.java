@@ -1,12 +1,19 @@
 package com.github.elic0de.h1.player;
 
 import com.github.elic0de.h1.H1Plugin;
+import com.github.elic0de.h1.database.PlayerData;
 import com.github.elic0de.h1.skill.Skill;
-import com.github.elic0de.h1.skill.skills.Ehoumaki;
+import com.github.elic0de.h1.utils.LogUtil;
+import com.github.elic0de.h1.utils.PlayerConverter;
 import com.github.elic0de.h1.utils.enums.SkillType;
+import lombok.Getter;
 import org.bukkit.entity.Player;
 
+@Getter
 public class H1Player {
+
+    private PlayerData playerData;
+    private Player player;
 
     private int level;
     private int mana;
@@ -15,18 +22,16 @@ public class H1Player {
     private int breakBlocks;
 
     private Skill skill;
+    private SkillType type;
 
     private int point;
 
     public H1Player(Player player) {
-        this.level = 0;
-        this.mana = 200;
-        this.maxMana = 200;
-        this.breakBlocks = 0;
-        this.point = 0;
-        this.skill = new Ehoumaki();
-
+        this.player = player;
+        type = SkillType.NONE;
+        playerData = new PlayerData(PlayerConverter.getID(player), this);
         H1Plugin.INSTANCE.getPlayerDataManager().addPlayer(player, this);
+        resetMana();
     }
 
     public void levelUP() {
@@ -34,6 +39,10 @@ public class H1Player {
         point = point + 5;
         maxMana = maxMana + 100;
         resetMana();
+    }
+
+    public boolean canBuy(Skill skill) {
+        return point >= skill.getPoint();
     }
 
     public int getLevel() {
@@ -53,8 +62,8 @@ public class H1Player {
     }
 
     public void useMana(int costMana) {
-        System.out.println(costMana + ":" + mana);
         this.mana = Math.max(0, this.mana - costMana);
+        sendBossBar(player);
     }
 
     public int getMana() {
@@ -95,10 +104,7 @@ public class H1Player {
 
     public void setSkill(SkillType skillType) {
         this.skill = skillType.skill;
-    }
-
-    public boolean hasPoint(int point) {
-        return point < this.point;
+        this.type = skillType;
     }
 
     public int getPoint() {
@@ -107,5 +113,20 @@ public class H1Player {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public void sendBossBar(Player player) {
+        if (H1Plugin.INSTANCE.getConfigManager().getConfig().getBooleanElse("BOSS_BAR_ENABLED", true)) {
+            // Check whether boss bar should update
+            H1Plugin.INSTANCE.getBossBar().incrementAction(player);
+            int currentAction = H1Plugin.INSTANCE.getBossBar().getCurrentAction(player);
+            if (currentAction != -1 && currentAction % H1Plugin.INSTANCE.getConfigManager().getConfig().getIntElse("BOSS_BAR_UPDATE_EVERY", 20) == 0) {
+                H1Plugin.INSTANCE.getBossBar().sendBossBar(player, mana, maxMana);
+            }
+        }
+    }
+
+    public void saveData() {
+        playerData.saveData();
     }
 }

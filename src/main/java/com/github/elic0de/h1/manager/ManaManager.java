@@ -25,7 +25,7 @@ public class ManaManager {
                         if (originalMana < maxMana) {
                             int regen = 1;
                             h1Player.setMana(Math.min(maxMana, originalMana + regen));
-                            H1Plugin.INSTANCE.getBossBar().sendBossBar(player, h1Player.getSkill(), h1Player.getMana(), h1Player.getMaxMana(), h1Player.getMana(), false);
+                            h1Player.sendBossBar(player);
                         }
                     }
                 }

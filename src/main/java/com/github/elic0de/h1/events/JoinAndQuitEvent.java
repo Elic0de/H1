@@ -16,6 +16,7 @@ public class JoinAndQuitEvent implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        H1Plugin.INSTANCE.getPlayerDataManager().getPlayer(event.getPlayer()).saveData();
         H1Plugin.INSTANCE.getPlayerDataManager().remove(event.getPlayer());
     }
 }

@@ -47,7 +47,7 @@ public class ConfigManager {
             String lang = languageCode.toUpperCase();
             LogUtil.info("Unknown user language " + lang + ".");
             LogUtil.info("If you fluently speak " + lang + " as well as English, see the GitHub repo to translate it!");
-            config.setLanguage(Language.EN);
+            config.setLanguage(Language.JA);
         }
 
         try {

@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 public @interface SkillData {
     String name() default "UNKNOWN";
 
+    String displayName() default  "UNKNOWN";
+
     String desc() default "NONE";
 
     String configName() default "DEFAULT";

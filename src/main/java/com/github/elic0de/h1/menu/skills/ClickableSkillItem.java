@@ -5,12 +5,14 @@ import com.github.elic0de.h1.H1Plugin;
 import com.github.elic0de.h1.menu.common.AbstractSkillItem;
 import com.github.elic0de.h1.player.H1Player;
 import com.github.elic0de.h1.skill.Skill;
+import com.github.elic0de.h1.utils.enums.SkillType;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class ClickableSkillItem extends AbstractSkillItem {
@@ -21,20 +23,26 @@ public class ClickableSkillItem extends AbstractSkillItem {
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, Skill skill) {
-        H1Player playerData = plugin.getPlayerDataManager().getPlayer(player);
+        final H1Player playerData = plugin.getPlayerDataManager().getPlayer(player);
         if (playerData == null) {
             return;
         }
-        // ここに選択処理
+
+        if (playerData.getPlayerData().hasSkill(skill.getSkillName())) {
+            // 選択処理
+            playerData.setSkill(SkillType.valueOf(skill.getSkillName().toUpperCase(Locale.ROOT)));
+        } else {
+            // 購入処理
+            if (playerData.canBuy(skill)) {
+                playerData.setPoint(Math.max(0, playerData.getPoint() - skill.getPoint()));
+                playerData.getPlayerData().addSkill(skill.getSkillName());
+            }
+        }
+        activeMenu.reload();
     }
 
     @Override
     public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        return new HashSet<>(H1Plugin.INSTANCE.getSkillRegistry().getSkills());
-    }
-
-    @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Skill skill) {
-        return baseItem;
+        return new HashSet<>(plugin.getSkillRegistry().getSkills());
     }
 }

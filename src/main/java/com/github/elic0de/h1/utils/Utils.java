@@ -1,7 +1,10 @@
 package com.github.elic0de.h1.utils;
 
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.ArrayList;
@@ -33,12 +36,11 @@ public class Utils {
         return returnString;
     }
 
-    public static List<Block> getBlocks(BlockBreakEvent e, int blocksUp, int blocksOut, int blocksAcross) {
+    public static List<Block> getBlocks(Block block, Player player, int blocksUp, int blocksOut, int blocksAcross) {
         int minedX = 0, minedY = 0, minedZ = 0;
-        String direction = Utils.getDirection(e.getPlayer().getLocation().getYaw());
-        String upordown = Utils.getUpOrDown(e.getPlayer().getLocation().getPitch());
+        String direction = Utils.getDirection(player.getLocation().getYaw());
+        String upordown = Utils.getUpOrDown(player.getLocation().getPitch());
 
-        Block block = e.getBlock();
         List<Block> area = new ArrayList<>();
 
         if (upordown.equals("DOWN")){
@@ -46,22 +48,22 @@ public class Utils {
             minedY = block.getY() - blocksUp;
             minedZ = block.getZ() - blocksAcross / 2;
         }
-        else if (e.getPlayer().getFacing().equals(BlockFace.EAST)) {
+        else if (player.getFacing().equals(BlockFace.EAST)) {
             minedX = block.getX();
             minedY = block.getY();
             minedZ = block.getZ() - (blocksAcross / 2);
         }
-        else if (e.getPlayer().getFacing().equals(BlockFace.SOUTH)) {
+        else if (player.getFacing().equals(BlockFace.SOUTH)) {
             minedX = block.getX() - blocksAcross / 2;
             minedY = block.getY();
             minedZ = block.getZ();
         }
-        else if (e.getPlayer().getFacing().equals(BlockFace.WEST)) {
+        else if (player.getFacing().equals(BlockFace.WEST)) {
             minedX = block.getX() - blocksOut;
             minedY = block.getY();
             minedZ = block.getZ() - blocksAcross / 2;
         }
-        else if (e.getPlayer().getFacing().equals(BlockFace.NORTH)) {
+        else if (player.getFacing().equals(BlockFace.NORTH)) {
             minedX = block.getX() - blocksAcross / 2;
             minedY = block.getY();
             minedZ = block.getZ() - blocksOut;
@@ -77,5 +79,19 @@ public class Utils {
         }
 
         return area;
+    }
+
+    public static List<Block> getBlocks(Block block, int radius) {
+        Block start = block.getLocation().getWorld().getBlockAt(block.getLocation());
+        int iterations = (radius * 2) + 1;
+        List<Block> blocks = new ArrayList<>(iterations * iterations * iterations);
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    blocks.add(start.getRelative(x, y, z));
+                }
+            }
+        }
+        return blocks;
     }
 }

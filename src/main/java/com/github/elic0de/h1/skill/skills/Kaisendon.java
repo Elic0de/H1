@@ -15,8 +15,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-@SkillData(name = "軍艦", desc = "10×10の範囲の溶岩をマグマブロックに変更して、マグマブロックの部分を一括破壊出来る", mana = 100, point = 150)
-public class Gunkan extends Skill {
+@SkillData(name = "kaisendon", displayName = "海鮮丼", desc = "2×1の縦方向を同時に掘れる", mana = 5, point = 5)
+public class Kaisendon extends Skill {
 
     private static final Set<Material> IGNORED_BLOCKS = EnumSet.of(
             Material.BEDROCK,
@@ -30,14 +30,14 @@ public class Gunkan extends Skill {
         Player player = event.getPlayer();
         H1Player h1Player = H1Plugin.INSTANCE.getPlayerDataManager().getPlayer(player);
 
-        if (h1Player.hasMana(mana)) return;
+        if (!h1Player.hasMana(mana)) return;
 
         if (player.getGameMode() == GameMode.CREATIVE) return;
-        int blocksUp = 2;
-        int blocksOut = 1;
+        int blocksUp = 1;
+        int blocksOut = 0;
         int blocksAcross = 0;
 
-        List<Block> area = Utils.getBlocks(event, blocksUp, blocksOut, blocksAcross);
+        List<Block> area = Utils.getBlocks(event.getBlock(), player, blocksUp, blocksOut, blocksAcross);
         if (area.size() <= 1) {
             return;
         }
@@ -47,6 +47,7 @@ public class Gunkan extends Skill {
                 b.breakNaturally();
             }
         }
+        h1Player.giveBreakBlocks(2);
         h1Player.useMana(mana);
     }
 }

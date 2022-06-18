@@ -6,6 +6,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import com.github.elic0de.h1.H1Plugin;
 import com.github.elic0de.h1.player.H1Player;
 import com.github.elic0de.h1.skill.Skill;
+import com.github.elic0de.h1.utils.LogUtil;
 import org.bukkit.entity.Player;
 
 public abstract class AbstractSkillItem extends AbstractItem implements TemplateItemProvider<Skill> {
@@ -21,12 +22,12 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
 
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Skill skill) {
-        H1Player playerData = plugin.getPlayerDataManager().getPlayer(player);
+        final H1Player playerData = plugin.getPlayerDataManager().getPlayer(player);
         if (playerData == null) return placeholder;
 
         switch (placeholder) {
             case "skill":
-                return skill.getSkillName();
+                return skill.getDisplayName();
             case "skill_desc":
                 return skill.getSkillDec();
             case "point":
@@ -34,7 +35,14 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             case "mana":
                 return String.valueOf(skill.getMana());
             case "skill_click":
-                return "クリックして選択";
+                if (playerData.getPlayerData().hasSkill(skill.getSkillName()) && playerData.getSkill() == skill) {
+                    return "&a選択済み";
+                } else if (playerData.getPlayerData().hasSkill(skill.getSkillName())){
+                    return "&eクリックして選択";
+                } else {
+                    return "&c購入する";
+            }
+
         }
         return placeholder;
     }

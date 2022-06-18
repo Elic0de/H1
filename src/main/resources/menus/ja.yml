@@ -4,15 +4,37 @@ fill:
   enabled: true
   material: black_stained_glass_pane
 items:
+  restore:
+    pos: 3,5
+    material: barrier
+    display_name: '&cはずす'
   close:
     pos: 3,4
-    material: barrier
+    material: arrow
     display_name: '{close}'
 templates:
   skill:
     ehoumaki:
+      pos: 1,1
+      material: apple
+    gunkan:
       pos: 1,2
-      material: anvil
+      material: pufferfish
+    inarizushi:
+      pos: 1,3
+      material: bread
+    kaisendon:
+      pos: 1,4
+      material: golden_apple
+    makizushi:
+      pos: 1,5
+      material: rabbit_stew
+    oshimaki:
+      pos: 1,6
+      material: pumpkin_pie
+    temakizushi:
+      pos: 1,7
+      material: glow_berries
     display_name: '&b{skill} &3{mana}'
     lore:
       - '&7{skill_desc}'

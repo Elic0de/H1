@@ -1,28 +1,21 @@
 package com.github.elic0de.h1.utils.enums;
 
 import com.github.elic0de.h1.skill.Skill;
-import com.github.elic0de.h1.skill.skills.Ehoumaki;
-import com.github.elic0de.h1.skill.skills.Gunkan;
+import com.github.elic0de.h1.skill.skills.*;
 
 public enum SkillType {
+    NONE(null),
     EHOUMAKI(new Ehoumaki()),
-    GUNKAN(new Gunkan());
+    GUNKAN(new Gunkan()),
+    INARIZUSHI(new Inarizushi()),
+    KAISENDON(new Kaisendon()),
+    MAKIZUSHI(new Makizushi()),
+    OSHIMAKI(new Oshimaki()),
+    TEMAKIZUSHI(new Temakizushi());
 
     public final Skill skill;
 
     SkillType(Skill skill) {
         this.skill = skill;
-    }
-
-    public static String getName(String skillName) {
-        switch (skillName) {
-            case "海鮮丼":
-                skillName = EHOUMAKI.name();
-                break;
-            case "軍艦":
-                skillName = GUNKAN.name();
-                break;
-        }
-        return skillName;
     }
 }

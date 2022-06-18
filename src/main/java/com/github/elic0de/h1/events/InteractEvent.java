@@ -1,7 +1,6 @@
 package com.github.elic0de.h1.events;
 
 import com.github.elic0de.h1.H1Plugin;
-import com.github.elic0de.h1.utils.LogUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

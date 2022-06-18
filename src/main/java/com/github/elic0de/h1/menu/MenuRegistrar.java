@@ -8,8 +8,8 @@ import com.github.elic0de.h1.H1Plugin;
 import com.github.elic0de.h1.menu.common.CloseItem;
 import com.github.elic0de.h1.menu.contexts.SkillContext;
 import com.github.elic0de.h1.menu.skills.ClickableSkillItem;
+import com.github.elic0de.h1.menu.skills.RestoreSkillItem;
 import com.github.elic0de.h1.menu.skills.SkillsMenu;
-import com.github.elic0de.h1.menu.skills.YourSkillsItem;
 import com.github.elic0de.h1.skill.Skill;
 
 public class MenuRegistrar {
@@ -34,7 +34,7 @@ public class MenuRegistrar {
         manager.registerSingleItem("close", new CloseItem(plugin));
         // Register menu specific items and templates
         ProviderManager skills = manager.getProviderManager("skills");
-        skills.registerSingleItem("your_skills", new YourSkillsItem(plugin));
+        skills.registerSingleItem("restore", new RestoreSkillItem(plugin));
         skills.registerTemplateItem("skill", new ClickableSkillItem(plugin));
     }
 }
