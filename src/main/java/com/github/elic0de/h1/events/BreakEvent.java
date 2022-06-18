@@ -13,7 +13,7 @@ public class BreakEvent implements Listener {
     public void onBreak(BlockBreakEvent event) {
         H1Player h1player = H1Plugin.INSTANCE.getPlayerDataManager().getPlayer(event.getPlayer());
 
-        h1player.giveBreakBlocks(1);
+        h1player.giveBreakBlocks(84900);
 
         // 1000ブロック掘ればプレイヤーに500円付与する
         if (h1player.getBreakBlocks() % 1000 == 0) {

@@ -73,10 +73,10 @@ public class PlayerData {
                     }
                 } else {
                     DynamicConfig config = H1Plugin.INSTANCE.getConfigManager().getConfig();
-                    int level = config.getIntElse("default.level", 0);
-                    int point = config.getIntElse("default.point", 0);
-                    int blocks = config.getIntElse("default.blocks", 0);
-                    int maxMana = config.getIntElse("default.maxMana", 200);
+                    int level = config.getIntElse("base-level", 0);
+                    int point = config.getIntElse("base-point", 0);
+                    int blocks = config.getIntElse("base-blocks", 0);
+                    int maxMana = config.getIntElse("base-maxMana", 200);
                     saver.add(new Saver.Record(Connector.UpdateType.ADD_PLAYER, playerID, String.valueOf(level), String.valueOf(point), String.valueOf(maxMana), String.valueOf(blocks)));
                 }
 

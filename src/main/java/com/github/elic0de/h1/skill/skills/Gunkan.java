@@ -5,7 +5,6 @@ import com.github.elic0de.h1.player.H1Player;
 import com.github.elic0de.h1.skill.Skill;
 import com.github.elic0de.h1.skill.SkillData;
 import com.github.elic0de.h1.tasks.MineAnimationTask;
-import com.github.elic0de.h1.utils.LogUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

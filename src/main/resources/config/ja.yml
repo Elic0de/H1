@@ -6,10 +6,48 @@
 
 config-version: 3
 
-海鮮丼:
+# Skill specific options
+kaisendon:
   mana: 5
-  point: 1
+  point: 5
+ehoumaki:
+  mana: 10
+  point: 20
+gunkan:
+  mana: 100
+  poinr: 150
+inarizushi:
+  mana: 100
+  point: 150
+oshimaki:
+  mana: 60
+  point: 100
+temakizushi:
+  mana: 30
+  point: 60
 
-恵方巻:
-  mana: 5
-  point: 1
+# Boss Bar Options
+boss-bar:
+  enabled: true
+  mode: multi
+  stay-time: 60
+  update-every: 1
+  round-xp: false
+  display-maxed: true
+  context: "&6マナ &7({mana}/{max_mana})"
+
+# The base amount
+base-level: 0
+base-point: 0
+base-blocks: 0
+base-mana: 200
+
+# Database Options
+mysql:
+  enabled: false
+  host: ''
+  port: ''
+  user: ''
+  pass: ''
+  base: ''
+  prefix: h1_

@@ -112,7 +112,7 @@ public enum H1Plugin {
             //log.debug("Connecting to MySQL database");
             this.database = new MySQL(this, config.getStringElse("mysql.host", "localhost"),
                     config.getStringElse("mysql.port", "3306"),
-                    config.getStringElse("mysql.base", "h1"), config.getStringElse("mysql.user", "h1"),
+                    config.getStringElse("mysql.base", "h1"), config.getStringElse("mysql.user", "h1_"),
                     config.getStringElse("mysql.pass", "h1"));
             if (database.getConnection() != null) {
                 isMySQLUsed = true;

@@ -116,11 +116,11 @@ public class H1Player {
     }
 
     public void sendBossBar(Player player) {
-        if (H1Plugin.INSTANCE.getConfigManager().getConfig().getBooleanElse("BOSS_BAR_ENABLED", true)) {
+        if (H1Plugin.INSTANCE.getConfigManager().getConfig().getBooleanElse("boss-bar.enabled", true)) {
             // Check whether boss bar should update
             H1Plugin.INSTANCE.getBossBar().incrementAction(player);
             int currentAction = H1Plugin.INSTANCE.getBossBar().getCurrentAction(player);
-            if (currentAction != -1 && currentAction % H1Plugin.INSTANCE.getConfigManager().getConfig().getIntElse("BOSS_BAR_UPDATE_EVERY", 20) == 0) {
+            if (currentAction % H1Plugin.INSTANCE.getConfigManager().getConfig().getIntElse("boss-bar.update-every", 1) == 0) {
                 H1Plugin.INSTANCE.getBossBar().sendBossBar(player, mana, maxMana);
             }
         }

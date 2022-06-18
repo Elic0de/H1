@@ -1,6 +1,7 @@
 package com.github.elic0de.h1.ui;
 
 import com.github.elic0de.h1.H1Plugin;
+import com.github.elic0de.h1.utils.LogUtil;
 import com.github.elic0de.h1.utils.MessageUtil;
 import com.github.elic0de.h1.utils.text.TextUtil;
 import github.scarsz.configuralize.DynamicConfig;
@@ -42,6 +43,8 @@ public class ManaBossBar implements Listener {
         this.singleCurrentActions = new HashMap<>();
         this.checkCurrentActions = new HashMap<>();
         this.singleCheckCurrentActions = new HashMap<>();
+
+        Bukkit.getPluginManager().registerEvents(this, plugin.getPlugin());
     }
 
     public void loadOptions() {
@@ -85,7 +88,7 @@ public class ManaBossBar implements Listener {
         }
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
-            bossBar = Bukkit.createBossBar(TextUtil.replace(MessageUtil.format(getConfig().getStringElse("bossbar.context", "&6マナ &7({mana}/{max_mana})")),
+            bossBar = Bukkit.createBossBar(TextUtil.replace(MessageUtil.format(getConfig().getStringElse("boss-bar.context", "&6マナ &7({mana}/{max_mana})")),
                     "{mana}", String.valueOf((int) currentMana),
                     "{max_mana}", String.valueOf((int) maxMana)), color, style);
             double progress = currentMana / maxMana;
@@ -106,9 +109,9 @@ public class ManaBossBar implements Listener {
         }
         // Use existing one
         else {
-            bossBar = Bukkit.createBossBar(TextUtil.replace(MessageUtil.format(getConfig().getStringElse("bossbar.context", "&6マナ &7({mana}/{max_mana})")),
+            bossBar.setTitle(TextUtil.replace(MessageUtil.format(getConfig().getStringElse("boss-bar.context", "&6マナ &7({mana}/{max_mana})")),
                     "{mana}", String.valueOf((int) currentMana),
-                    "{max_mana}", String.valueOf((int) maxMana)), color, style);
+                    "{max_mana}", String.valueOf((int) maxMana)));
             double progress = currentMana / maxMana;
             if (progress <= 1 && progress >= 0) {
                 bossBar.setProgress(currentMana / maxMana);
